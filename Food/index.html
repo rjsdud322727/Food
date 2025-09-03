@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>식당 목록</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=73f34dc5cc09bf9b7fdd68e33c45c654&libraries=services"></script>
+</head>
+<body>
+    
+<div class="container">
+    <div class="header">
+        <button id="orderHistoryBtn">주문 내역</button>
+        <button id="clearOrderHistoryBtn">주문 내역 삭제</button>
+        <h1>음식점 찾기</h1>
+        <button class="location-btn">
+            <span class="material-icons">위치</span>
+            현위치 찾기
+        </button>
+    </div>
+
+    <div id="orderHistory" style="display: none;">
+        <h2>주문 내역</h2>
+        <div id="orderList"></div>
+    </div>
+
+    <div class="search-bar">
+        <input type="text" placeholder="음식점을 검색해보세요">
+    </div>
+
+    <div class="categories">
+        <div class="category">
+            <img src="images/한식.jpeg" id="searchKorean" alt="한식">
+            <div class="category-name">한식</div>
+        </div>
+        <div class="category">
+            <img src="images/중식.jpeg" id="searchChinese" alt="중식">
+            <div class="category-name">중식</div>
+        </div>
+        <div class="category">
+            <img src="images/회 - 복사본.jpeg" id="searchJapanese" alt="일식">
+            <div class="category-name">일식</div>
+        </div>
+        <div class="category">
+            <img src="images/패스트푸드.jpeg" id="searchBurger" alt="햄버거">
+            <div class="category-name">햄버거</div>
+        </div>
+        <div class="category">
+            <img src="images/치킨.jpeg" id="searchChicken" alt="치킨">
+            <div class="category-name">치킨</div>
+        </div>
+        <div class="category">
+            <img src="images/피자.jpeg" id="searchPizza" alt="피자">
+            <div class="category-name">피자</div>
+        </div>
+        <div class="category">
+            <img src="images/분식.jpeg" id="searchSnack" alt="분식">
+            <div class="category-name">분식</div>
+        </div>
+        <div class="category">
+            <img src="images/카페디저트.jpeg" id="searchCafe" alt="카페.디저트">
+            <div class="category-name">카페.디저트</div>
+        </div>
+    </div>
+
+    
+
+    <!-- 주소 모달 -->
+    <div class="modal" id="addressModal">
+        <div class="modal-header">
+            <button class="back-btn">←</button>
+            <div class="modal-title">주소 설정</div>
+            <button class="edit-btn">편집</button>
+        </div>
+        <div class="modal-search">
+            <input type="text" placeholder="지번, 도로명, 건물명으로 검색">
+        </div>
+        <button class="current-location-btn" id="findCurrentLocationButton">현재 위치 찾기</button>
+       
+        
+        <!-- 최근 설정 위치 목록 -->
+        <div class="recent-locations-container">
+            <h3>최근 설정 위치</h3>
+            <div class="recent-locations">
+                <div class="search-result-item" onclick="selectAddress('부산 사상구 백양대로 712 1층 (우)46957')">부산 사상구 백양대로 712 1층 (우)46957</div>
+                <div class="search-result-item" onclick="selectAddress('부산 사상구 덕포동 789')">부산 사상구 덕포동 789</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 지도 모달 -->
+    <div class="map-modal" id="mapModal">
+        <div class="map-header">
+            <button class="back-btn">←</button>
+            <div class="modal-title">현재 위치 정보</div>
+        </div>
+        <div id="map" style="width:100%; height:400px;"></div>
+        <button class="confirm-location-btn">이 위치로 설정</button>
+    </div>
+
+    <!-- 상세 주소 입력 모달 -->
+    <div class="address-input-modal" id="addressInputModal" style="display: none;">
+        <div class="modal-content">
+            <h3>상세 주소 입력</h3>
+            <div class="current-address">
+                <p>기본 주소: <span id="baseAddress"></span></p>
+            </div>
+            <div class="input-group">
+                <input type="text" id="detailAddress" placeholder="상세 주소를 입력해주세요">
+            </div>
+            <div class="button-group">
+                <button type="button" class="save-btn">확인</button>
+                <button type="button" class="cancel-btn">취소</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 모달 오버레이 -->
+    <div class="modal-overlay" id="modalOverlay"></div>
+
+    <button id="getAddress">주소 변환</button>
+    <div id="result"></div>
+    <div id="app">
+        <div id="map"></div>
+        <div id="restaurantList"></div>
+        
+        <!-- 챗봇 버튼 추가 -->
+        <button id="chatbotButton" class="chatbot-button">챗봇 열기</button>
+        
+        <!-- 챗봇 모달 추가 -->
+        <div id="chatbotModal" class="chatbot-modal">
+            <div class="chatbot-header">
+                <h3>챗봇</h3>
+                <button id="closeChatbot">닫기</button>
+            </div>
+            <div id="chatMessages" class="chat-messages"></div>
+            <div class="chatbot-input">
+                <input type="text" id="userInput" placeholder="메시지를 입력하세요">
+                <button id="sendMessage">전송</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</div>
+</body>
+</html> 
